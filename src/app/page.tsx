@@ -3,7 +3,8 @@
 import { useState, FormEvent } from "react";
 import Image from "next/image";
 import BG from "/public/login.jpg";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 interface User {
   email: string;
   password: string;
@@ -12,7 +13,7 @@ interface User {
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [message, setMessage] = useState<string>("");
+
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   const handleSubmit = async (event: FormEvent) => {
@@ -26,11 +27,27 @@ const Login = () => {
     );
 
     if (userExists) {
-      setMessage("Login successful");
       setIsSuccess(true);
+      toast.success("Login successful", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     } else {
-      setMessage("Invalid email or password");
       setIsSuccess(false);
+      toast.error("Invalid email or password", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
@@ -93,10 +110,7 @@ const Login = () => {
           </a>
         </form>
         <div className="text-lg">
-          {" "}
-          {message && (
-            <p style={{ color: isSuccess ? "green" : "red" }}>{message}</p>
-          )}{" "}
+          <ToastContainer />
         </div>
       </div>
     </main>
