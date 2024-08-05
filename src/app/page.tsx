@@ -5,6 +5,7 @@ import Image from "next/image";
 import BG from "/public/login.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Link from "next/link";
 interface User {
   email: string;
   password: string;
@@ -105,9 +106,9 @@ const Login = () => {
           >
             continue with email
           </button>
-          <a href="#" className="text-center text-xs underline">
-            forgot password
-          </a>
+          <div className="text-center text-xs underline">
+            <Link href="/forgot_Password">Forgot Password?</Link>
+          </div>
         </form>
         <div className="text-lg">
           <ToastContainer />
