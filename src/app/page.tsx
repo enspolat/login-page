@@ -1,7 +1,39 @@
+"use client";
+
+import { useState, FormEvent } from "react";
 import Image from "next/image";
 import BG from "/public/login.jpg";
 
-export default function Home() {
+interface User {
+  email: string;
+  password: string;
+}
+
+const Login = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+
+    const res = await fetch("/users.json");
+    const users: User[] = await res.json();
+
+    const userExists = users.some(
+      (user) => user.email === email && user.password === password
+    );
+
+    if (userExists) {
+      setMessage("Login successful");
+      setIsSuccess(true);
+    } else {
+      setMessage("Invalid email or password");
+      setIsSuccess(false);
+    }
+  };
+
   return (
     <main className=" min-h-screen grid grid-cols-2">
       <div className="flex items-center justify-center overflow-hidden relative">
@@ -20,13 +52,19 @@ export default function Home() {
         <p>
           Use your <b>work email</b> for a better experience
         </p>
-        <form className="flex flex-col gap-5 py-5 w-[350px]">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-5 py-5 w-[350px]"
+        >
           <div className="flex flex-col gap-2">
             <label htmlFor="" className="text-xs">
               E-mail
             </label>
             <input
-              type="text"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
               placeholder="type your work email"
               className="text-xs bg-neutral-800 rounded-lg py-2 px-4 outline-none focus:outline-neutral-600"
             />
@@ -37,18 +75,31 @@ export default function Home() {
             </label>
             <input
               type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
               placeholder="type your password"
               className="text-xs  bg-neutral-800 rounded-lg py-2 px-4 outline-none focus:outline-neutral-600"
             />
           </div>
-          <button className="text-xs text-white font-semibold rounded py-2 px-4 bg-[#06A087] hover:bg-white hover:text-[#06A087]">
+          <button
+            type="submit"
+            className="text-xs text-white font-semibold rounded py-2 px-4 bg-[#06A087] hover:bg-white hover:text-[#06A087]"
+          >
             continue with email
           </button>
           <a href="#" className="text-center text-xs underline">
             forgot password
           </a>
         </form>
+        <div className="text-lg">
+          {" "}
+          {message && (
+            <p style={{ color: isSuccess ? "green" : "red" }}>{message}</p>
+          )}{" "}
+        </div>
       </div>
     </main>
   );
-}
+};
+export default Login;
