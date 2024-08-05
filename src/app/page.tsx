@@ -6,6 +6,7 @@ import BG from "/public/login.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 interface User {
   email: string;
   password: string;
@@ -14,7 +15,7 @@ interface User {
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-
+  const router = useRouter();
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   const handleSubmit = async (event: FormEvent) => {
@@ -38,6 +39,7 @@ const Login = () => {
         draggable: true,
         progress: undefined,
       });
+      router.push("/home_Page");
     } else {
       setIsSuccess(false);
       toast.error("Invalid email or password", {

@@ -12,10 +12,6 @@ const ForgotPassword = () => {
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
-    // Burada şifre sıfırlama işlemini yapmanız gerekiyor.
-    // Genellikle bu işlem bir backend API'sine bir istek göndererek yapılır.
-    // Örnek olarak sadece bir toast mesajı göstereceğiz.
-
     toast.info("Password reset link sent to your email", {
       position: "top-right",
       autoClose: 5000,
