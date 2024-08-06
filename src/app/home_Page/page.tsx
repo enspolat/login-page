@@ -6,11 +6,7 @@ const HomePage = () => {
   const router = useRouter();
 
   const handleLogout = () => {
-    // Burada oturumu sonlandırma işlemini yapmanız gerekiyor.
-    // Örneğin, bir oturum çerezi veya token'ı kaldırmak.
-
-    // Yönlendirme işlemi
-    router.push("/"); // Çıkış yaptıktan sonra ana sayfaya yönlendiriyoruz
+    router.push("/");
   };
 
   return (
